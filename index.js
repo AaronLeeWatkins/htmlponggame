@@ -28,8 +28,8 @@ var puck = {
   x: 400,
   y: 310,
   velocity: {
-    x: getRandomVelocity(),
-    y: getRandomVelocity(),
+    x: getRandomVelocity() * 2.5,
+    y: getRandomVelocity() * 2.5,
   }
 };
 
@@ -78,8 +78,16 @@ function gameLoop() {
     player2.y = Math.min(540, player2.y + 3 * player2.speed);
   }
 
-  renderGame();
-}
+  if (puck.x > 800) {
+    restartGame();
+  }
+
+  if (puck.x < -10) {
+    restartGame();
+  }
+
+ renderGame()
+};
 
 function renderGame() {
   context.fillStyle = 'black';
@@ -94,6 +102,7 @@ function renderGame() {
   context.fillStyle = 'green';
   context.fillRect(player1.x, player1.y, 5, 60);
   context.fillRect(player2.x, player2.y, 5, 60);
+
 }
 
 document.addEventListener('keydown' , function (event) {
@@ -140,6 +149,14 @@ document.addEventListener('keyup' , function (event) {
 }
 });
 
+restartGame()
+
+function restartGame () {
+  puck.x = 400;
+  puck.y = 300;
+  puck.velocity.x = getRandomVelocity() * 2.5;
+  puck.velocity.y = getRandomVelocity() * 2.5;
+  }
 
 
 setInterval(gameLoop, 1000 / 60);
